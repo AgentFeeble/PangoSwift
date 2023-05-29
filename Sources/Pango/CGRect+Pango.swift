@@ -13,10 +13,14 @@ extension CGRect
     public init(pangoRectangle: PangoRectangle)
     {
         self.init(
-            x: CGFloat(pangoRectangle.x),
-            y: CGFloat(pangoRectangle.y),
-            width: CGFloat(pangoRectangle.width),
-            height: CGFloat(pangoRectangle.height)
+            origin: CGPoint(
+                x: CGFloat(pangoRectangle.x),
+                y: CGFloat(pangoRectangle.y)
+            ),
+            size: CGSize(
+                width: CGFloat(pangoRectangle.width),
+                height: CGFloat(pangoRectangle.height)
+            )
         )
     }
 }
