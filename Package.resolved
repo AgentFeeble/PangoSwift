@@ -1,0 +1,14 @@
+{
+  "pins" : [
+    {
+      "identity" : "cairo",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/AgentFeeble/Cairo",
+      "state" : {
+        "branch" : "pango",
+        "revision" : "bc6deaf8d238852b0a7f83401d5786198d6dad97"
+      }
+    }
+  ],
+  "version" : 2
+}
