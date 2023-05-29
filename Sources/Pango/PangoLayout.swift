@@ -20,6 +20,11 @@ public class PangoLayout: UnsafeMutablePointerOwner
         self.internalPointer = internalPointer
     }
 
+    public convenience init()
+    {
+        self.init(context: PangoContext())
+    }
+
     public init(context: PangoContext)
     {
         guard let internalPointer = pango_layout_new(context.internalPointer) else
@@ -113,7 +118,7 @@ public class PangoLayout: UnsafeMutablePointerOwner
 
     public var textIsWrappedForCurrentState: Bool
     {
-        return pango_layout_is_wrapped(self.internalPointer) != 0
+        return Bool(pango_layout_is_wrapped(self.internalPointer))
     }
 
     public var indent: Int32
@@ -136,20 +141,20 @@ public class PangoLayout: UnsafeMutablePointerOwner
 
     public var justify: Bool
     {
-        get { pango_layout_get_justify(self.internalPointer) != 0 }
-        set { pango_layout_set_justify(self.internalPointer, newValue ? 1 : 0) }
+        get { Bool(pango_layout_get_justify(self.internalPointer)) }
+        set { pango_layout_set_justify(self.internalPointer, newValue.gboolean) }
     }
 
     public var justifyLastLine: Bool
     {
-        get { pango_layout_get_justify_last_line(self.internalPointer) != 0 }
-        set { pango_layout_set_justify_last_line(self.internalPointer, newValue ? 1 : 0) }
+        get { Bool(pango_layout_get_justify_last_line(self.internalPointer)) }
+        set { pango_layout_set_justify_last_line(self.internalPointer, newValue.gboolean) }
     }
 
     public var autoInferTextDirection: Bool
     {
-        get { pango_layout_get_auto_dir(self.internalPointer) != 0 }
-        set { pango_layout_set_auto_dir(self.internalPointer, newValue ? 1 : 0) }
+        get { Bool(pango_layout_get_auto_dir(self.internalPointer)) }
+        set { pango_layout_set_auto_dir(self.internalPointer, newValue.gboolean) }
     }
 
     public var alignment: PangoAlignment
@@ -168,8 +173,8 @@ public class PangoLayout: UnsafeMutablePointerOwner
 
     public var singleParagraphMode: Bool
     {
-        get { pango_layout_get_single_paragraph_mode(self.internalPointer) != 0 }
-        set { pango_layout_set_single_paragraph_mode(self.internalPointer, newValue ? 1 : 0) }
+        get { Bool(pango_layout_get_single_paragraph_mode(self.internalPointer)) }
+        set { pango_layout_set_single_paragraph_mode(self.internalPointer, newValue.gboolean) }
     }
 
     public var ellipsizeMode: PangoEllipsizeMode
@@ -188,7 +193,21 @@ public class PangoLayout: UnsafeMutablePointerOwner
 
     public var textIsEllipsizedForCurrentState: Bool
     {
-        return pango_layout_is_ellipsized(self.internalPointer) != 0
+        return Bool(pango_layout_is_ellipsized(self.internalPointer))
+    }
+
+    public func set(fontDescription: PangoFontDescription?)
+    {
+        pango_layout_set_font_description(self.internalPointer, fontDescription?.internalPointer)
+    }
+
+    public func copyFontDescription() -> PangoFontDescription?
+    {
+        guard let description = pango_layout_get_font_description(self.internalPointer) else
+        {
+            return nil
+        }
+        return PangoFontDescription(copying: description)
     }
 
     public func updateLayout(cairoPointer: OpaquePointer)

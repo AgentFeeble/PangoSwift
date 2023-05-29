@@ -49,3 +49,10 @@ public enum PangoEllipsizeMode
     }
 }
 
+extension PangoEllipsizeMode: Sendable, Equatable, Hashable
+{
+    public func hash(into hasher: inout Hasher)
+    {
+        hasher.combine(self.cPangoEllipsizeMode.rawValue)
+    }
+}

@@ -18,6 +18,16 @@ public final class PangoContext: UnsafeMutablePointerOwner
         g_object_unref(self.internalPointer)
     }
 
+    public init()
+    {
+        let fontMap = pango_cairo_font_map_get_default()
+        guard let internalPointer = pango_font_map_create_context(fontMap) else
+        {
+            fatalError("pango_font_map_create_context() failed")
+        }
+        self.internalPointer = internalPointer
+    }
+
     /// This method will retain `internalPointer`, and release it in `deinit`
     internal init(internalPointer: UnsafeMutablePointer<CPango.PangoContext>)
     {

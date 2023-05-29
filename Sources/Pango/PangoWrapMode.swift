@@ -43,3 +43,11 @@ public enum PangoWrapMode
         }
     }
 }
+
+extension PangoWrapMode: Sendable, Equatable, Hashable
+{
+    public func hash(into hasher: inout Hasher)
+    {
+        hasher.combine(self.cPangoWrapMode.rawValue)
+    }
+}
