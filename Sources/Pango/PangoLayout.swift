@@ -145,11 +145,14 @@ public class PangoLayout: UnsafeMutablePointerOwner
         set { pango_layout_set_justify(self.internalPointer, newValue.gboolean) }
     }
 
+    // TODO: This #if macro is not currently working
+#if PANGO_AVAILABLE_IN_1_50
     public var justifyLastLine: Bool
     {
         get { Bool(pango_layout_get_justify_last_line(self.internalPointer)) }
         set { pango_layout_set_justify_last_line(self.internalPointer, newValue.gboolean) }
     }
+#endif // PANGO_AVAILABLE_IN_1_50
 
     public var autoInferTextDirection: Bool
     {
